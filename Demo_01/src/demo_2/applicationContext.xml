@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--创建service-->
+   <!-- <property>用于属性注入
+                name：bean的属性名，同过setter方法获得
+
+                ref：另一个bean的id值 的引用-->
+    <bean id="bookService" class="demo_2.BookServiceImpl">
+        <property name="baookDao" ref="bookDao"/>
+    </bean>
+
+    <bean id="bookDao" class="demo_2.BookDaoImpl">
+
+    </bean>
+
+
+</beans>
