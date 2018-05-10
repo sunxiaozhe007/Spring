@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <!--创建一个person-->
+        <!--setter方法注入
+            * 普通数据<property name="" value="值"/>
+              等效于 <property name="">
+                        <value>值</value>
+                    </property>-->
+    <bean   id="person"
+            class="xml.b_setter.Person">
+        <property name="pname" value="sun"/>
+        <property name="age">
+            <value>123</value>
+        </property>
+        <!--引用数据-->
+        <property name="homeAddress" ref="homeAddress"/>
+        <property name="companyAddress" ref="companyAddress"/>
+
+    </bean>
+
+    <bean id="homeAddress" class="xml.b_setter.Address">
+        <property name="address" value="宝鸡"/>
+        <property name="tel" value="3333"/>
+    </bean>
+
+    <bean id="companyAddress" class="xml.b_setter.Address">
+        <property name="address" value="西安"/>
+        <property name="tel" value="123"/>
+    </bean>
+</beans>
