@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <!--
+   集合的注入都是给<property>添加子标签
+   数组:<array>
+    List:<list>
+    Set:<set>
+    Map:<map> map存放k/v键值对 使用<entry>描述
+    Properties:<props>  <prop key=""></prop>
+
+    普通数据<value>
+    引用数据<ref>
+    -->
+
+    <bean id="collData" class="xml.e_collection.CollData">
+        <property name="arrayData">
+            <array>
+                <value>ssss</value>
+                <value>xxxx</value>
+                <value>zzzz</value>
+                <value>sxz</value>
+            </array>
+        </property>
+        <property name="listData">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+                <value>ddd</value>
+            </list>
+        </property>
+        <property name="setData">
+            <set>
+                <value>qqq</value>
+                <value>www</value>
+                <value>eee</value>
+            </set>
+        </property>
+        <property name="mapData">
+            <map>
+                <entry key="sun" value="孙"/>
+                <entry key="xiao" value="晓"/>
+                <entry key="zhe" value="哲"/>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="aaa">AAA</prop>
+                <prop key="bbb">BBB</prop>
+                <prop key="ccc">CCC</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
