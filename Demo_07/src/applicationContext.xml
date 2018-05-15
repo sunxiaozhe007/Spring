@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <!--datasoure-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sxz"/>
+        <property name="user" value="root"/>
+        <property name="password" value="0528"/>
+     </bean>
+
+    <!--dao-->
+    <bean id="accountDao" class="dao.Impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--service-->
+    <bean id="accountService" class="service.Impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--事物管理-->
+        <!--1.事物管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+        <!--2.事物详情：事物通知-->
+    <tx:advice id="interceptor" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="tranfer" propagation="REQUIRED" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+    
+        <!--3.AOP编程，目标类有ABCD（4个连接点）切入点表达式确定增强的连接器，从而获得连接点:ABC-->
+    <aop:config>
+        <aop:advisor advice-ref="interceptor" pointcut="execution(* service..*.*(..))"/>
+    </aop:config>
+</beans>
