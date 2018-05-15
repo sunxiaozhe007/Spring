@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--datasoure-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sxz"/>
+        <property name="user" value="root"/>
+        <property name="password" value="0528"/>
+     </bean>
+
+    <!--dao-->
+    <bean id="accountDao" class="dao.Impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--service-->
+    <bean id="accountService" class="service.Impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--service 代理对象-->
+            <!--1.proxyInterfaces 接口-->
+            <!--2.target 目标类-->
+            <!--3.transactionManager 事物管理器-->
+            <!--4.transactionAttributes 事物属性：事物详情-->
+                        <!--prop key:确定哪些方法使用当前事物配置-->
+                        <!--prop key：用于配置事物详情-->
+    <bean id="proxyFactoryBean" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="proxyInterfaces" value="service.AccountService"/>
+        <property name="target" ref="accountService"/>
+        <property name="transactionManager" ref="txManage"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="transfer"/>
+            </props>
+        </property>
+    </bean>
+
+    <!--事物管理器-->
+    <bean id="txManage" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+</beans>
